@@ -8,22 +8,6 @@ class Counter extends Component {
         counter: 0
     }
 
-    counterChangedHandler = ( action, value ) => {
-        switch ( action ) {
-            case 'inc':
-                this.setState( ( prevState ) => { return { counter: prevState.counter + 1 } } )
-                break;
-            case 'dec':
-                this.setState( ( prevState ) => { return { counter: prevState.counter - 1 } } )
-                break;
-            case 'add':
-                this.setState( ( prevState ) => { return { counter: prevState.counter + value } } )
-                break;
-            case 'sub':
-                this.setState( ( prevState ) => { return { counter: prevState.counter - value } } )
-                break;
-        }
-    }
 
     render () {
         return (
@@ -33,6 +17,13 @@ class Counter extends Component {
                 <CounterControl label="Decrement" clicked={this.props.onDecrementCounter}  />
                 <CounterControl label="Add 10" clicked={this.props.onAdditionCounter}  />
                 <CounterControl label="Subtract 15" clicked={  this.props.onSubtractioncounter} />
+                <hr></hr>
+                <button onClick={this.props.StoreResults}>Store Results</button>
+                <ul>
+                    {this.props.results.map(strResult => (
+                                        <li onClick={ () => this.props.DeleteResults(strResult.id)} key={strResult.id}>{strResult.value}</li>
+                    ))}
+                </ul>
             </div>
         );
     }
@@ -40,7 +31,8 @@ class Counter extends Component {
 
 const mapStateToProps = state => {
     return{
-        ctr:state.counter
+        ctr:state.counter,
+        results:state.result
     };
 }
 
@@ -49,7 +41,9 @@ const mapDispatchToProps = dispatch =>{
         onIncrementCounter: () => dispatch({type: 'INCREMENT'}),
         onDecrementCounter:() => dispatch({type: 'DECREMENT'}),
         onAdditionCounter : () => dispatch({type:'ADDITION' , value:10}),
-        onSubtractioncounter : () => dispatch({type: 'SUBTRACTION', value: 15})
+        onSubtractioncounter : () => dispatch({type: 'SUBTRACTION', value: 15}),
+        StoreResults : () => dispatch({type: 'STORE_RESULTS'}),
+        DeleteResults : (id) => dispatch({type:'DELETE_RESULT', resultElId: id})
     };
 }
 
