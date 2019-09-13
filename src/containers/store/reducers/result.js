@@ -1,7 +1,8 @@
 import * as actionTypes from '../actions';
 
 const initialState={
-    result:[]
+    result:[],
+    
 }
 
 const reducer = (state = initialState, action) =>{
@@ -9,7 +10,7 @@ const reducer = (state = initialState, action) =>{
         case actionTypes.STORE_RESULT:
             return{
                 ...state,
-                result: state.result.concat({id: new Date(), value: action.result})
+                result: state.result.concat({id: new Date(), value: action.result, secvalue: action.value})
             }
             case actionTypes.DELETE_RESULT:
             //method:1 (array immutable)    
