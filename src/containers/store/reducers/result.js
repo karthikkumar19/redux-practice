@@ -2,8 +2,13 @@ import * as actionTypes from '../actions/actionTypes';
 import {updateObject} from '../utility';
 
 const initialState={
-    result:[],
-    
+    result:[],   
+}
+
+const deleteResult = (state, action) => {
+    const newArray = state.result.filter(result => result.id !== action.resultElId);
+    return updateObject(state,{results:newArray});
+
 }
 
 const reducer = (state = initialState, action) =>{
@@ -18,13 +23,9 @@ const reducer = (state = initialState, action) =>{
                 // newArray.splice(id,1)
 
             //method:-2 using filter
+            return deleteResult(state,action)
 
-            const newArray = state.result.filter(result => result.id !== action.resultElId);
-                return {
-                    ...state,
-                    result:newArray,
-                    counter:0
-                }
+                
     }
     return state;
 }
